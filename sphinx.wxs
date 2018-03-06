@@ -52,8 +52,12 @@
             <Component Id='WebSphinx' Guid='0C7F6674-6ACF-46E3-9089-FC71DC771F0E' Win64="yes">
               <File Id='websphinxPy' Name='websphinx.py' DiskId='1' Source='websphinx.py'/>
               <File Id='websphinxChromeJson' Name='websphinx.chrome.json' DiskId='1' Source='websphinx.chrome.json' />
-              <RegistryKey Id='NativeManifests' Root='HKLM' Key='Software\Google\Chrome\NativeMessagingHosts\websphinx' ForceDeleteOnUninstall="yes">
+              <RegistryKey Id='ChromeNativeManifests' Root='HKLM' Key='Software\Google\Chrome\NativeMessagingHosts\websphinx' ForceDeleteOnUninstall="yes">
                 <RegistryValue Type='string' Value='[INSTALLDIR]websphinx.chrome.json'/>
+              </RegistryKey>
+              <File Id='websphinxFirefoxJson' Name='websphinx.firefox.json' DiskId='1' Source='websphinx.firefox.json' />
+              <RegistryKey Id='FirefoxNativeManifests' Root='HKLM' Key='SOFTWARE\Mozilla\NativeMessagingHosts\websphinx' ForceDeleteOnUninstall="yes">
+                <RegistryValue Type='string' Value='[INSTALLDIR]websphinx.firefox.json'/>
               </RegistryKey>
             </Component>
           </Directory>
