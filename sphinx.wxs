@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+  <Product Name='Sphinx 1.0' Id='FDDD7AD6-F102-46D5-B577-B75A234E4428' UpgradeCode='A3264392-0CF6-487C-8821-849BA46F61F9'
+    Language='1033' Codepage='1252' Version='1.0.0' Manufacturer="stf">
+
+    <Package Id='*' Keywords='Installer' Description="Sphinx 1.0 Installer"
+      InstallerVersion='200' Languages='1033' Compressed='yes' Platform="x64" SummaryCodepage='1252' />
+
+    <Media Id='1' Cabinet='Sphinx.cab' EmbedCab='yes' DiskPrompt="CD-ROM #1" />
+    <Property Id='DiskPrompt' Value="Sphinx 1.0 Installation [1]" />
+
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+      <Directory Id='ProgramFiles64Folder' Name='PFiles'>
+        <Directory Id='INSTALLDIR' Name='Sphinx 1.0'>
+            <Component Id='Pinentry' Guid='EA9DE664-B9F3-43C6-B713-E2C607E2C48C' Win64="yes">
+              <File Id='Qt5CoreDll' Name='Qt5Core.dll' DiskId='1' Source='Qt5Core.dll' />
+              <File Id='Qt5GuiDll' Name='Qt5Gui.dll' DiskId='1' Source='Qt5Gui.dll' />
+              <File Id='Qt5WidgetsDll' Name='Qt5Widgets.dll' DiskId='1' Source='Qt5Widgets.dll' />
+              <File Id='libassuanDll' Name='libassuan-0.dll' DiskId='1' Source='libassuan-0.dll' />
+              <File Id='libgpgerrorDll' Name='libgpg-error-0.dll' DiskId='1' Source='libgpg-error-0.dll' />
+              <File Id='libstdcppDll' Name='libstdc++-6.dll' DiskId='1' Source='libstdc++-6.dll' />
+              <File Id='libwinpthreadDll' Name='libwinpthread-1.dll' DiskId='1' Source='libwinpthread-1.dll' />
+              <File Id='pinentryqtExe' Name='pinentry-qt.exe' DiskId='1' Source='pinentry-qt.exe' KeyPath='yes' />
+            </Component>
+
+            <Directory Id='PlatformDir' Name='platforms'>
+              <Component Id='qwindows' Guid='3E74A0FD-08E6-4AB4-A075-99BC3F3BCAF3'  Win64="yes">
+                <File Id='qwindowsDll' Name='qwindows.dll' DiskId='1' Source='qwindows.dll' KeyPath='yes' />
+              </Component>
+            </Directory>
+
+            <Component Id='Sodium' Guid='3CB858F3-EEEF-43AC-9D53-6170866F0D90' Win64="yes">
+              <File Id='libsodiumDll' Name='libsodium.dll' DiskId='1' Source='libsodium.dll' />
+              <File Id='pysodiumPy' Name='pysodium.py' DiskId='1' Source='pysodium.py' KeyPath='yes' />
+            </Component>
+
+            <Component Id='SphinxPy' Guid='EBAC7D68-BDEB-45EF-8297-A5E91201D0C2' Win64="yes">
+              <File Id='sphinxlibPy' Name='sphinxlib.py' DiskId='1' Source='sphinxlib.py' />
+              <File Id='sphinxPy' Name='sphinx.py' DiskId='1' Source='sphinx.py' KeyPath='yes' />
+              <File Id='bin2passPy' Name='bin2pass.py' DiskId='1' Source='bin2pass.py' />
+              <File Id='configPy' Name='config.py' DiskId='1' Source='config.py' />
+              <File Id='sphinxCfg' Name='sphinx.cfg' DiskId='1' Source='sphinx.cfg' />
+              <File Id='serverKeyPub' Name='server-key.pub' DiskId='1' Source='server-key.pub' />
+            </Component>
+
+            <Component Id='LibSphinx' Guid='A6E5782A-8515-4164-9EED-04E2A3EA6BCD' Win64="yes">
+              <File Id='libsphinxDll' Name='libsphinx.dll' DiskId='1' Source='libsphinx.dll' KeyPath='yes' />
+              <File Id='libgcc_s_sjljDll' Name='libgcc_s_sjlj-1.dll' DiskId='1' Source='libgcc_s_sjlj-1.dll' />
+              <File Id='libgcc_s_sehDll' Name='libgcc_s_seh-1.dll' DiskId='1' Source='libgcc_s_seh-1.dll' />
+            </Component>
+
+            <Component Id='WebSphinx' Guid='0C7F6674-6ACF-46E3-9089-FC71DC771F0E' Win64="yes">
+              <File Id='websphinxPy' Name='websphinx.py' DiskId='1' Source='websphinx.py'/>
+              <File Id='websphinxChromeJson' Name='websphinx.chrome.json' DiskId='1' Source='websphinx.chrome.json' />
+              <RegistryKey Id='NativeManifests' Root='HKLM' Key='Software\Google\Chrome\NativeMessagingHosts\websphinx' ForceDeleteOnUninstall="yes">
+                <RegistryValue Type='string' Value='[INSTALLDIR]websphinx.chrome.json'/>
+              </RegistryKey>
+            </Component>
+          </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature Id='Complete' Title='Sphinx 1.0' Description='Sphinx the password manager backend.'
+      Display='expand' Level='1' ConfigurableDirectory='INSTALLDIR'>
+      <Feature Id='MainProgram' Title='Program' Description='The main executable.' Level='1'>
+        <ComponentRef Id='SphinxPy' />
+        <ComponentRef Id='LibSphinx' />
+        <ComponentRef Id='WebSphinx' />
+      <!--</Feature>-->
+
+      <!--<Feature Id='Sodium' Title='libsodium' Description='The libsodium dll needed for some signatures.' Level='2'>-->
+        <ComponentRef Id='Sodium' />
+      <!--</Feature>-->
+
+      <!--<Feature Id='Pinentry' Title='The password query program' Description='This is the external program that asks for the password.' Level='2'>-->
+        <ComponentRef Id='Pinentry' />
+        <ComponentRef Id='qwindows' />
+      </Feature>
+    </Feature>
+
+  </Product>
+</Wix>
