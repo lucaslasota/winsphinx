@@ -33,22 +33,27 @@ pkg.zip: pkg $(FILES)
 pkg:
 	mkdir pkg
 
-pkg/libgcc_s_seh-1.dll: blobs/libgcc_s_seh-1.dll
-	#cp /usr/lib/gcc/x86_64-w64-mingw32/7.2-posix/libgcc_s_seh-1.dll $@
-	cp $< $@
+#### libsphinx
 
-pkg/libgcc_s_sjlj-1.dll: blobs/libgcc_s_sjlj-1.dll
-	#cp /usr/lib/gcc/i686-w64-mingw32/7.2-posix/libgcc_s_sjlj-1.dll $@
-	cp $< $@
+pkg/libsphinx.dll: libsphinx libsphinx/src/libsphinx.dll
+	cp libsphinx/src/libsphinx.dll $@
 
-pkg/libsphinx.dll: libsphinx/src/libsphinx.dll
-	cp $< $@
+libsphinx:
+	git submodule init libsphinx; git submodule update libsphinx
 
-libsphinx/src/libsphinx.dll:
+libsphinx/src/libsphinx.dll: libsphinx/src/goldilocks
 	cd libsphinx/src/goldilocks; make clean_generated; cd ..; make clean win
 
-pkg/pysodium.py: pysodium/pysodium/__init__.py
-	cp $< $@
+libsphinx/src/goldilocks: libsphinx
+	cd libsphinx/src; git submodule init goldilocks; git submodule update goldilocks
+
+#### pysodium
+
+pkg/pysodium.py: pysodium pysodium/pysodium/__init__.py
+	cp pysodium/pysodium/__init__.py $@
+
+pysodium:
+	git submodule init pysodium; git submodule update pysodium
 
 #### config for the sphinx server
 
@@ -60,28 +65,37 @@ pkg/sphinx.cfg: cfg/sphinx.cfg
 
 #### sphinx python wrapper
 
-pkg/bin2pass.py: pwdsphinx/pwdsphinx/bin2pass.py
-	cp $< $@
+pkg/bin2pass.py: pwdsphinx pwdsphinx/pwdsphinx/bin2pass.py
+	cp pwdsphinx/pwdsphinx/bin2pass.py $@
 
-pkg/config.py: pwdsphinx/pwdsphinx/config.py
-	cp $< $@
+pkg/config.py: pwdsphinx pwdsphinx/pwdsphinx/config.py
+	cp pwdsphinx/pwdsphinx/config.py $@
 
-pkg/sphinx.py: pwdsphinx/pwdsphinx/sphinx.py
-	cp $< $@
+pkg/sphinx.py: pwdsphinx pwdsphinx/pwdsphinx/sphinx.py
+	cp pwdsphinx/pwdsphinx/sphinx.py $@
 
-pkg/sphinxlib.py: pwdsphinx/pwdsphinx/sphinxlib.py
-	cp $< $@
+pkg/sphinxlib.py: pwdsphinx pwdsphinx/pwdsphinx/sphinxlib.py
+	cp pwdsphinx/pwdsphinx/sphinxlib.py $@
 
-pkg/websphinx.py: pwdsphinx/pwdsphinx/websphinx.py
-	cp $< $@
+pkg/websphinx.py: pwdsphinx pwdsphinx/pwdsphinx/websphinx.py
+	cp pwdsphinx/pwdsphinx/websphinx.py $@
+
+pwdsphinx:
+	git submodule init pwdsphinx; git submodule update pwdsphinx
 
 #### the native messaging manifests
 
-pkg/websphinx.chrome.json: websphinx-chrom/websphinx.json
-	cp $< $@
+pkg/websphinx.chrome.json: websphinx-chrom websphinx-chrom/websphinx.json
+	cp websphinx-chrom/websphinx.json $@
 
-pkg/websphinx.firefox.json: websphinx-firefox/websphinx.json
-	cp $< $@
+websphinx-chrom:
+	git submodule init websphinx-chrom; git submodule update websphinx-chrom
+
+pkg/websphinx.firefox.json: websphinx-firefox websphinx-firefox/websphinx.json
+	cp websphinx-firefox/websphinx.json $@
+
+websphinx-firefox:
+	git submodule init websphinx-firefox; git submodule update websphinx-firefox
 
 #### the windows installer
 
@@ -154,6 +168,16 @@ verify-libsodium:
 
 pkg/libsodium.dll: sodium libsodium/libsodium-win64/bin/libsodium-23.dll
 	cp libsodium/libsodium-win64/bin/libsodium-23.dll $@
+
+#### blobs
+
+pkg/libgcc_s_seh-1.dll: blobs/libgcc_s_seh-1.dll
+	#cp /usr/lib/gcc/x86_64-w64-mingw32/7.2-posix/libgcc_s_seh-1.dll $@
+	cp $< $@
+
+pkg/libgcc_s_sjlj-1.dll: blobs/libgcc_s_sjlj-1.dll
+	#cp /usr/lib/gcc/i686-w64-mingw32/7.2-posix/libgcc_s_sjlj-1.dll $@
+	cp $< $@
 
 ##### house-keeping
 
