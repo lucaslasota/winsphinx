@@ -1,3 +1,18 @@
 [submodule "goldilocks"]
 	path = src/goldilocks
 	url = git://git.code.sf.net/p/ed448goldilocks/code
+[submodule "asdf/pysodium"]
+	path = pysodium
+	url = https://github.com/stef/pysodium.git
+[submodule "asdf/libsphinx"]
+	path = libsphinx
+	url = https://github.com/stef/libsphinx.git
+[submodule "asdf/pwdsphinx"]
+	path = pwdsphinx
+	url = https://github.com/stef/pwdsphinx.git
+[submodule "websphinx-firefox"]
+	path = websphinx-firefox
+	url = https://github.com/stef/websphinx-firefox.git
+[submodule "websphinx-chrom"]
+	path = websphinx-chrom
+	url = https://github.com/stef/websphinx-chrom.git
