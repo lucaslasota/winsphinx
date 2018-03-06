@@ -27,6 +27,8 @@ GPG=gpg1
 GPG4WINVER=3.0.3
 SODIUMVER=1.0.16
 
+all: pkg.zip
+
 pkg.zip: pkg $(FILES)
 	zip -r pkg pkg
 
