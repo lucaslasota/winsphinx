@@ -60,6 +60,26 @@
                 <RegistryValue Type='string' Value='[INSTALLDIR]websphinx.firefox.json'/>
               </RegistryKey>
             </Component>
+
+            <Directory Id='WebSphinxDir' Name='websphinx'>
+              <Component Id='WebSphinxComponents' Guid='41AA20C4-9645-4F74-9CD6-81EDB96FE2BA'  Win64="yes">
+                <File Id='popupJs' Name='popup.js' DiskId='1' Source='websphinx/popup.js' />
+                <File Id='popupHtml' Name='popup.html' DiskId='1' Source='websphinx/popup.html' />
+                <File Id='popupCss' Name='popup.css' DiskId='1' Source='websphinx/popup.css' />
+                <File Id='manifestJson' Name='manifest.json' DiskId='1' Source='websphinx/manifest.json' />
+                <File Id='injectJs' Name='inject.js' DiskId='1' Source='websphinx/inject.js' />
+                <File Id='iconPng' Name='icon.png' DiskId='1' Source='websphinx/icon.png' />
+                <File Id='bgJs' Name='background.js' DiskId='1' Source='websphinx/background.js' />
+              </Component>
+              <Directory Id='WebSphinxLocalesDir' Name='_locales'>
+                <Directory Id='WebSphinxENLocalesDir' Name='en'>
+                  <Component Id='WebSphinxEnLocale' Guid='EE16FFBF-43C5-4D67-9E86-AE4F3BF8B631'  Win64="yes">
+                    <File Id='enMsgJson' Name='messages.json' DiskId='1' Source='websphinx/_locales/en/messages.json' />
+                  </Component>
+                </Directory>
+              </Directory>
+            </Directory>
+
           </Directory>
       </Directory>
     </Directory>
@@ -79,6 +99,12 @@
       <!--<Feature Id='Pinentry' Title='The password query program' Description='This is the external program that asks for the password.' Level='2'>-->
         <ComponentRef Id='Pinentry' />
         <ComponentRef Id='qwindows' />
+      <!--</Feature>-->
+
+      <!--<Feature Id='WebSphinx Title='WebSphinx addon for chrome and opera' Description='This is the Chrom*/Opera extension - you want to install this in the chrome://extension page with developer mode enabled.' Level='2'>-->
+        <ComponentRef Id='WebSphinxComponents' />
+        <ComponentRef Id='WebSphinxEnLocale' />
+
       </Feature>
     </Feature>
 
